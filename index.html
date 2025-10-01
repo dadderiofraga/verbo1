@@ -1,350 +1,546 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terminações - Futuro do Presente do Indicativo</title>
+    <title>Exercício de Conjugação Verbal</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
             color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 2rem;
+            padding: 20px;
         }
         
         .container {
             max-width: 1000px;
-            width: 100%;
+            margin: 0 auto;
             background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-        }
-        
-        header {
-            background: linear-gradient(to right, #2c3e50, #4a6491);
-            color: white;
-            padding: 1.5rem;
-            text-align: center;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
         
         h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
             font-size: 2.2rem;
-            margin-bottom: 0.5rem;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .content {
-            padding: 2rem;
-        }
-        
-        .conjugation-section {
-            margin-bottom: 2rem;
-        }
-        
-        .conjugation-title {
-            background-color: #34495e;
-            color: white;
-            padding: 1rem;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 0;
-            font-size: 1.4rem;
-        }
-        
-        .termination-table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .termination-table th {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1rem;
             text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .verb-selector {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .verb-option {
+            padding: 12px 24px;
+            background: linear-gradient(to right, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
             font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .termination-table td {
-            padding: 1rem;
-            text-align: center;
-            border-bottom: 1px solid #eaeaea;
+        .verb-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
         
-        .conj-ar {
-            background-color: #e8f5e8;
+        .verb-option.selected {
+            background: linear-gradient(to right, #2c3e50, #34495e);
         }
         
-        .conj-er {
-            background-color: #e8f0f5;
+        .tense-selector {
+            margin-bottom: 25px;
         }
         
-        .conj-ir {
-            background-color: #f5e8f5;
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f8f9fa;
+            transition: border-color 0.3s;
         }
         
-        .person {
+        select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .input-section {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .radical-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
+            text-align: center;
+        }
+        
+        .plus-sign {
+            margin: 0 15px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .ending-info {
+            font-weight: 600;
             color: #2c3e50;
         }
         
-        .termination {
-            color: #e74c3c;
-            font-weight: bold;
+        .concept-box {
+            background-color: #e8f4fc;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            border-left: 4px solid #3498db;
         }
         
-        .structure {
-            font-family: 'Courier New', monospace;
-            background-color: #f8f9fa;
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #eaeaea;
+        .concept-title {
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
         }
         
         .examples {
-            background-color: #f0f7ff;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 2rem;
-            border-left: 5px solid #2980b9;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f1f8e9;
+            border-radius: 6px;
+            border-left: 4px solid #7cb342;
         }
         
-        .examples h2 {
+        .examples-title {
+            font-weight: 600;
             color: #2c3e50;
-            margin-bottom: 1rem;
+            margin-bottom: 8px;
         }
         
-        .example-item {
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        .conjugation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
-        .verb-example {
+        .conjugation-table th {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .conjugation-table td {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+        }
+        
+        .conjugation-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .conjugation-table tr:hover {
+            background-color: #f0f7ff;
+        }
+        
+        .ending-input {
+            width: 80px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .result-cell {
             font-weight: bold;
             color: #2c3e50;
         }
         
-        .pattern-box {
-            background-color: #2c3e50;
-            color: white;
-            padding: 1.5rem;
-            border-radius: 10px;
-            margin-top: 1.5rem;
-            text-align: center;
+        .correct {
+            color: #27ae60;
         }
         
-        footer {
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        .hint {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .footer {
             text-align: center;
-            margin-top: 2rem;
-            color: white;
-            opacity: 0.8;
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
         }
         
         @media (max-width: 768px) {
-            .container {
-                margin: 1rem;
+            .verb-selector {
+                flex-direction: column;
+                align-items: center;
             }
             
-            h1 {
-                font-size: 1.8rem;
+            .verb-option {
+                width: 80%;
             }
             
-            .termination-table {
-                font-size: 0.9rem;
+            .input-section {
+                flex-direction: column;
+                gap: 10px;
             }
             
-            .termination-table th, 
-            .termination-table td {
-                padding: 0.7rem 0.5rem;
+            .plus-sign {
+                margin: 5px 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Futuro do Presente do Indicativo</h1>
-            <div class="subtitle">Terminações dos Verbos Regulares</div>
-        </header>
+        <h1>Exercício de Conjugação Verbal</h1>
+        <p class="subtitle">Pratique a conjugação de verbos regulares em diferentes tempos do indicativo</p>
         
-        <div class="content">
-            <div class="conjugation-section">
-                <h2 class="conjugation-title">1ª Conjugação (-ar)</h2>
-                <table class="termination-table">
-                    <thead>
-                        <tr>
-                            <th>Pessoa</th>
-                            <th>Estrutura</th>
-                            <th>Exemplo (Falar)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="conj-ar">
-                        <tr>
-                            <td class="person">(Eu)</td>
-                            <td class="structure">radical + <span class="termination">-arei</span></td>
-                            <td class="verb-example">falarei</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Tu)</td>
-                            <td class="structure">radical + <span class="termination">-arás</span></td>
-                            <td class="verb-example">falarás</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Ele)</td>
-                            <td class="structure">radical + <span class="termination">-ará</span></td>
-                            <td class="verb-example">falará</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Nós)</td>
-                            <td class="structure">radical + <span class="termination">-aremos</span></td>
-                            <td class="verb-example">falaremos</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Vós)</td>
-                            <td class="structure">radical + <span class="termination">-areis</span></td>
-                            <td class="verb-example">falareis</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Eles)</td>
-                            <td class="structure">radical + <span class="termination">-arão</span></td>
-                            <td class="verb-example">falarão</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="conjugation-section">
-                <h2 class="conjugation-title">2ª Conjugação (-er)</h2>
-                <table class="termination-table">
-                    <thead>
-                        <tr>
-                            <th>Pessoa</th>
-                            <th>Estrutura</th>
-                            <th>Exemplo (Beber)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="conj-er">
-                        <tr>
-                            <td class="person">(Eu)</td>
-                            <td class="structure">radical + <span class="termination">-erei</span></td>
-                            <td class="verb-example">beberei</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Tu)</td>
-                            <td class="structure">radical + <span class="termination">-erás</span></td>
-                            <td class="verb-example">beberás</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Ele)</td>
-                            <td class="structure">radical + <span class="termination">-erá</span></td>
-                            <td class="verb-example">beberá</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Nós)</td>
-                            <td class="structure">radical + <span class="termination">-eremos</span></td>
-                            <td class="verb-example">beberemos</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Vós)</td>
-                            <td class="structure">radical + <span class="termination">-ereis</span></td>
-                            <td class="verb-example">bebereis</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Eles)</td>
-                            <td class="structure">radical + <span class="termination">-erão</span></td>
-                            <td class="verb-example">beberão</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="conjugation-section">
-                <h2 class="conjugation-title">3ª Conjugação (-ir)</h2>
-                <table class="termination-table">
-                    <thead>
-                        <tr>
-                            <th>Pessoa</th>
-                            <th>Estrutura</th>
-                            <th>Exemplo (Partir)</th>
-                        </tr>
-                    </thead>
-                    <tbody class="conj-ir">
-                        <tr>
-                            <td class="person">(Eu)</td>
-                            <td class="structure">radical + <span class="termination">-irei</span></td>
-                            <td class="verb-example">partirei</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Tu)</td>
-                            <td class="structure">radical + <span class="termination">-irás</span></td>
-                            <td class="verb-example">partirás</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Ele)</td>
-                            <td class="structure">radical + <span class="termination">-irá</span></td>
-                            <td class="verb-example">partirá</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Nós)</td>
-                            <td class="structure">radical + <span class="termination">-iremos</span></td>
-                            <td class="verb-example">partiremos</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Vós)</td>
-                            <td class="structure">radical + <span class="termination">-ireis</span></td>
-                            <td class="verb-example">partireis</td>
-                        </tr>
-                        <tr>
-                            <td class="person">(Eles)</td>
-                            <td class="structure">radical + <span class="termination">-irão</span></td>
-                            <td class="verb-example">partirão</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="pattern-box">
-                <h3>Padrão Geral de Formação</h3>
-                <p>Futuro do Presente = Verbo no Infinitivo + Terminações do verbo "haver" no Presente</p>
-            </div>
-            
+        <div class="verb-selector">
+            <button class="verb-option" data-verb="amar" data-radical="am">AMAR</button>
+            <button class="verb-option" data-verb="comer" data-radical="com">COMER</button>
+            <button class="verb-option" data-verb="partir" data-radical="part">PARTIR</button>
+            <button class="verb-option" data-verb="falar" data-radical="fal">FALAR</button>
+            <button class="verb-option" data-verb="vender" data-radical="vend">VENDER</button>
+        </div>
+        
+        <div class="tense-selector">
+            <select id="tense-select">
+                <option value="presente">Presente do Indicativo</option>
+                <option value="imperfeito">Pretérito Imperfeito do Indicativo</option>
+                <option value="perfeito">Pretérito Perfeito do Indicativo</option>
+                <option value="mais-que-perfeito">Pretérito Mais-que-perfeito do Indicativo</option>
+                <option value="futuro-presente">Futuro do Presente do Indicativo</option>
+                <option value="futuro-preterito">Futuro do Pretérito do Indicativo</option>
+            </select>
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="radical-input" class="radical-input" placeholder="Digite o radical do verbo">
+            <span class="plus-sign">+</span>
+            <span id="ending-info">terminação</span>
+        </div>
+        
+        <div class="concept-box">
+            <div class="concept-title" id="concept-title">Conceito do Tempo Verbal</div>
+            <div id="concept-text">Selecione um tempo verbal para ver sua explicação.</div>
             <div class="examples">
-                <h2>Exemplos de Uso</h2>
-                <div class="example-item">
-                    <span class="verb-example">Estudarei</span> para a prova amanhã. (Ação futura certa)
-                </div>
-                <div class="example-item">
-                    <span class="verb-example">Falaremos</span> com o diretor na próxima semana. (Plano)
-                </div>
-                <div class="example-item">
-                    <span class="verb-example">Partiremos</span> assim que você chegar. (Ação condicionada)
-                </div>
-                <div class="example-item">
-                    <span class="verb-example">Beberei</span> mais água este ano. (Promessa)
-                </div>
+                <div class="examples-title">Exemplos de uso:</div>
+                <div id="examples-text">Os exemplos aparecerão aqui quando você selecionar um tempo verbal.</div>
             </div>
         </div>
+        
+        <table class="conjugation-table">
+            <thead>
+                <tr>
+                    <th width="20%">Pessoa</th>
+                    <th width="40%">Radical + Terminação</th>
+                    <th width="40%">Verbo Conjugado</th>
+                </tr>
+            </thead>
+            <tbody id="conjugation-body">
+                <!-- As linhas serão preenchidas via JavaScript -->
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>Exercício baseado nas regras de conjugação de verbos regulares do Português</p>
+        </div>
     </div>
-    
-    <footer>
-        <p>Terminações do Futuro do Presente do Indicativo - Verbos Regulares</p>
-    </footer>
+
+    <script>
+        // Definição das terminações por tempo verbal e conjugação
+        const endings = {
+            presente: {
+                ar: ['o', 'as', 'a', 'amos', 'ais', 'am'],
+                er: ['o', 'es', 'e', 'emos', 'eis', 'em'],
+                ir: ['o', 'es', 'e', 'imos', 'is', 'em']
+            },
+            imperfeito: {
+                ar: ['ava', 'avas', 'ava', 'ávamos', 'áveis', 'avam'],
+                er: ['ia', 'ias', 'ia', 'íamos', 'íeis', 'iam'],
+                ir: ['ia', 'ias', 'ia', 'íamos', 'íeis', 'iam']
+            },
+            perfeito: {
+                ar: ['ei', 'aste', 'ou', 'amos', 'astes', 'aram'],
+                er: ['i', 'este', 'eu', 'emos', 'estes', 'eram'],
+                ir: ['i', 'iste', 'iu', 'imos', 'istes', 'iram']
+            },
+            'mais-que-perfeito': {
+                ar: ['ara', 'aras', 'ara', 'áramos', 'áreis', 'aram'],
+                er: ['era', 'eras', 'era', 'êramos', 'êreis', 'eram'],
+                ir: ['ira', 'iras', 'ira', 'íramos', 'íreis', 'iram']
+            },
+            'futuro-presente': {
+                ar: ['arei', 'arás', 'ará', 'aremos', 'areis', 'arão'],
+                er: ['erei', 'erás', 'erá', 'eremos', 'ereis', 'erão'],
+                ir: ['irei', 'irás', 'irá', 'iremos', 'ireis', 'irão']
+            },
+            'futuro-preterito': {
+                ar: ['aria', 'arias', 'aria', 'aríamos', 'aríeis', 'ariam'],
+                er: ['eria', 'erias', 'eria', 'eríamos', 'eríeis', 'eriam'],
+                ir: ['iria', 'irias', 'iria', 'iríamos', 'iríeis', 'iriam']
+            }
+        };
+
+        // Conceitos e exemplos para cada tempo verbal
+        const tenseConcepts = {
+            presente: {
+                title: "Presente do Indicativo",
+                concept: "O presente do indicativo é utilizado para expressar ações que acontecem no momento da fala, ações habituais, verdades universais e fatos permanentes. Também pode ser usado para expressar futuro próximo.",
+                examples: [
+                    "Eu amo passear no parque aos domingos.",
+                    "Nós comemos frutas todos os dias.",
+                    "Ele parte para o trabalho às 7h."
+                ]
+            },
+            imperfeito: {
+                title: "Pretérito Imperfeito do Indicativo",
+                concept: "O pretérito imperfeito do indicativo expressa ações contínuas ou repetitivas no passado, descreve cenários ou situações no passado, e é usado para expressar cortesia em pedidos.",
+                examples: [
+                    "Quando eu era criança, eu amava brincar no parque.",
+                    "Nós comíamos naquela lanchonete frequentemente.",
+                    "Ele partia cedo todos os dias para evitar o trânsito."
+                ]
+            },
+            perfeito: {
+                title: "Pretérito Perfeito do Indicativo",
+                concept: "O pretérito perfeito do indicativo é usado para expressar ações concluídas no passado, fatos que aconteceram em um momento específico e ações que ocorreram uma única vez.",
+                examples: [
+                    "Eu amei aquele filme que assistimos ontem.",
+                    "Nós comemos pizza no jantar de sábado.",
+                    "Ele partiu para São Paulo na semana passada."
+                ]
+            },
+            'mais-que-perfeito': {
+                title: "Pretérito Mais-que-perfeito do Indicativo",
+                concept: "O pretérito mais-que-perfeito do indicativo expressa uma ação passada que ocorreu antes de outra ação também passada. É usado para indicar anterioridade em relação a um fato já ocorrido.",
+                examples: [
+                    "Quando cheguei, ele já amara e perdera.",
+                    "Antes do anoitecer, nós já comêramos.",
+                    "Ele já partira quando você telefonou."
+                ]
+            },
+            'futuro-presente': {
+                title: "Futuro do Presente do Indicativo",
+                concept: "O futuro do presente do indicativo expressa ações que irão acontecer, certeza ou probabilidade no futuro, e também é usado para expressar ordens de forma polida.",
+                examples: [
+                    "Eu amarei cada momento das nossas férias.",
+                    "Nós comeremos no novo restaurante amanhã.",
+                    "Ele partirá assim que terminar o trabalho."
+                ]
+            },
+            'futuro-preterito': {
+                title: "Futuro do Pretérito do Indicativo",
+                concept: "O futuro do pretérito do indicativo se refere a um fato que poderia ter acontecido posteriormente a uma situação passada. É utilizado também para indicar uma ação que é consequente de outra, encontrando-se condicionada.",
+                examples: [
+                    "Eu amaria viajar pelo mundo se tivesse condições.",
+                    "Nós comeríamos mais se ainda houvesse comida.",
+                    "Ele partiria mais cedo se você permitisse."
+                ]
+            }
+        };
+
+        // Pessoas gramaticais
+        const persons = ['(Eu)', '(Tu)', '(Ele/Ela/Você)', '(Nós)', '(Vós)', '(Eles/Elas/Vocês)'];
+
+        // Elementos DOM
+        const verbOptions = document.querySelectorAll('.verb-option');
+        const tenseSelect = document.getElementById('tense-select');
+        const radicalInput = document.getElementById('radical-input');
+        const endingInfo = document.getElementById('ending-info');
+        const conjugationBody = document.getElementById('conjugation-body');
+        const conceptTitle = document.getElementById('concept-title');
+        const conceptText = document.getElementById('concept-text');
+        const examplesText = document.getElementById('examples-text');
+
+        // Estado atual
+        let currentVerb = 'amar';
+        let currentRadical = 'am';
+        let currentConjugation = 'ar';
+        let currentTense = 'presente';
+
+        // Inicialização
+        document.querySelector('.verb-option[data-verb="amar"]').classList.add('selected');
+        updateEndingInfo();
+        updateConcept();
+        generateConjugationTable();
+
+        // Event Listeners
+        verbOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                verbOptions.forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                
+                currentVerb = option.dataset.verb;
+                currentRadical = option.dataset.radical;
+                radicalInput.value = currentRadical;
+                
+                // Determinar a conjugação baseada na terminação do verbo
+                if (currentVerb.endsWith('ar')) {
+                    currentConjugation = 'ar';
+                } else if (currentVerb.endsWith('er')) {
+                    currentConjugation = 'er';
+                } else if (currentVerb.endsWith('ir')) {
+                    currentConjugation = 'ir';
+                }
+                
+                generateConjugationTable();
+            });
+        });
+
+        tenseSelect.addEventListener('change', () => {
+            currentTense = tenseSelect.value;
+            updateEndingInfo();
+            updateConcept();
+            generateConjugationTable();
+        });
+
+        radicalInput.addEventListener('input', () => {
+            currentRadical = radicalInput.value;
+            generateConjugationTable();
+        });
+
+        // Funções auxiliares
+        function updateEndingInfo() {
+            const tenseNames = {
+                'presente': 'Presente do Indicativo',
+                'imperfeito': 'Pretérito Imperfeito do Indicativo',
+                'perfeito': 'Pretérito Perfeito do Indicativo',
+                'mais-que-perfeito': 'Pretérito Mais-que-perfeito do Indicativo',
+                'futuro-presente': 'Futuro do Presente do Indicativo',
+                'futuro-preterito': 'Futuro do Pretérito do Indicativo'
+            };
+            
+            endingInfo.textContent = `Terminações do ${tenseNames[currentTense]}`;
+        }
+
+        function updateConcept() {
+            const concept = tenseConcepts[currentTense];
+            conceptTitle.textContent = concept.title;
+            conceptText.textContent = concept.concept;
+            
+            // Atualizar exemplos
+            examplesText.innerHTML = '';
+            concept.examples.forEach(example => {
+                const p = document.createElement('p');
+                p.textContent = example;
+                examplesText.appendChild(p);
+            });
+        }
+
+        function generateConjugationTable() {
+            conjugationBody.innerHTML = '';
+            const currentEndings = endings[currentTense][currentConjugation];
+            
+            for (let i = 0; i < persons.length; i++) {
+                const row = document.createElement('tr');
+                
+                // Coluna da pessoa
+                const personCell = document.createElement('td');
+                personCell.textContent = persons[i];
+                row.appendChild(personCell);
+                
+                // Coluna do radical + terminação
+                const inputCell = document.createElement('td');
+                inputCell.innerHTML = `
+                    <span>${currentRadical} + </span>
+                    <input type="text" class="ending-input" data-index="${i}" 
+                           placeholder="${currentEndings[i]}" maxlength="10">
+                    <div class="hint">Terminação correta: ${currentEndings[i]}</div>
+                `;
+                row.appendChild(inputCell);
+                
+                // Coluna do resultado
+                const resultCell = document.createElement('td');
+                resultCell.className = 'result-cell';
+                resultCell.id = `result-${i}`;
+                row.appendChild(resultCell);
+                
+                conjugationBody.appendChild(row);
+            }
+            
+            // Adicionar event listeners aos inputs de terminação
+            document.querySelectorAll('.ending-input').forEach(input => {
+                input.addEventListener('input', updateResult);
+            });
+            
+            // Atualizar resultados iniciais
+            updateAllResults();
+        }
+
+        function updateResult(event) {
+            const index = event.target.dataset.index;
+            const ending = event.target.value;
+            const resultCell = document.getElementById(`result-${index}`);
+            
+            if (ending) {
+                resultCell.textContent = currentRadical + ending;
+                
+                // Verificar se a terminação está correta
+                const correctEnding = endings[currentTense][currentConjugation][index];
+                if (ending === correctEnding) {
+                    resultCell.classList.add('correct');
+                    resultCell.classList.remove('incorrect');
+                } else {
+                    resultCell.classList.add('incorrect');
+                    resultCell.classList.remove('correct');
+                }
+            } else {
+                resultCell.textContent = '';
+                resultCell.classList.remove('correct', 'incorrect');
+            }
+        }
+
+        function updateAllResults() {
+            document.querySelectorAll('.ending-input').forEach(input => {
+                const event = new Event('input');
+                input.dispatchEvent(event);
+            });
+        }
+    </script>
 </body>
 </html>
